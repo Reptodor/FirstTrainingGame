@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,19 +11,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")] 
     [SerializeField] private float _jumpForce;
     
-    
     [Header("GroundCheck")]
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _playerHeight;
     private bool _grounded;
     
-    
     private Rigidbody2D _rigidbody;
     
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-    }
+    private void Awake() => _rigidbody = GetComponent<Rigidbody2D>();
 
     private void Update()
     {
@@ -38,10 +32,9 @@ public class PlayerMovement : MonoBehaviour
         Jump();
     }
 
-    private void GetAxis()
-    {
-        _moveHorizontal = Input.GetAxisRaw("Horizontal");
-    }
+    private void GetAxis() => _moveHorizontal = Input.GetAxisRaw("Horizontal");
+    
+    private void Move() => _rigidbody.velocity = new Vector2(_speed * _moveHorizontal, _rigidbody.velocity.y);
 
     private void Flip()
     {
@@ -58,11 +51,6 @@ public class PlayerMovement : MonoBehaviour
         return _grounded;
     }
     
-    private void Move()
-    {
-        _rigidbody.velocity = new Vector2(_speed * _moveHorizontal, _rigidbody.velocity.y);
-    }
-
     private void Jump()
     {
         if (GroundCheck() && Input.GetKey(KeyCode.Space))

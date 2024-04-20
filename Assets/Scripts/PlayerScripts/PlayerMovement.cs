@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Walking")]
     [SerializeField] private float _speed;
+    private Vector3 _currentPositionOnGround;
     private float _moveHorizontal;
     private int _yRotation = 0;
 
@@ -24,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     {
         GetAxis();
         Flip();
+
+        if (_grounded)
+            _currentPositionOnGround = transform.position;
     }
     
     private void FixedUpdate()
@@ -56,6 +62,14 @@ public class PlayerMovement : MonoBehaviour
         if (GroundCheck() && Input.GetKey(KeyCode.Space))
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("LowerLimitOfLocation"))
+        {
+            transform.position = _currentPositionOnGround;
         }
     }
 }

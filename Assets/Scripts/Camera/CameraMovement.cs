@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private Transform _player;
 
-    private void Update()
-    {
-        Move();
-    }
+    public void LateUpdate() => Move();
+
 
     private void Move()
     {

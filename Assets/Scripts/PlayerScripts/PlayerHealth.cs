@@ -14,23 +14,14 @@ public class PlayerHealth : Health
             heart.SetActive(true);
         }
     }
-
-    private void Update()
-    {
-        Death();
-    }
     
     public override void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
         _hearts[CurrentHealth].SetActive(false);
+        if (CurrentHealth <= 0) Death();
     }
 
-    public override void Death()
-    {
-        if (CurrentHealth <= 0)
-        {
-            SceneManager.LoadScene(0);
-        }
-    }
+    public override void Death() => SceneManager.LoadScene(0);
+    
 }

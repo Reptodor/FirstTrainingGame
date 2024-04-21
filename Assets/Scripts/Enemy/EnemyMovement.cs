@@ -37,5 +37,7 @@ public class EnemyMovement : MonoBehaviour
             _currentWaypointIndex = _nextWaypointIndex;
             _nextWaypointIndex++;
         }
+        
+        
     }
 }

@@ -1,16 +1,25 @@
-using System;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private Transform _player;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 MinimumValues, MaximumValues;
+    [Range(1, 10)]
+    [SerializeField] private float _smoothFactor;
+    
+    public void FixedUpdate() => Follow();
 
-    public void LateUpdate() => Move();
 
-
-    private void Move()
+    private void Follow()
     {
-        var position = _player.transform.position;
-        transform.position = new Vector3(position.x, position.y, transform.position.z);
+        var position = _player.transform.position + _offset;
+
+        Vector3 boundPosition = new Vector3(
+            Mathf.Clamp(position.x, MinimumValues.x, MaximumValues.x),
+            Mathf.Clamp(position.y, MinimumValues.y, MaximumValues.y),
+            Mathf.Clamp(position.z, MinimumValues.z, MaximumValues.z));
+        
+        transform.position = Vector3.Lerp(transform.position, boundPosition, _smoothFactor * Time.fixedDeltaTime);
     }
 }

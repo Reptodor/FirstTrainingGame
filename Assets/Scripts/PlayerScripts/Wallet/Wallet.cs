@@ -20,12 +20,11 @@ public class Wallet : MonoBehaviour
         {
             _currentCoinsCount += coin;
             
-            if(_currentCoinsCount == _size)
-            {
-                _finish.CanFinish = true;
-            }
-            
             OnCountOfCoinsChanged.Invoke(_currentCoinsCount);
+        }
+        else
+        {
+            _finish.CanFinish = true;
         }
     }
 }

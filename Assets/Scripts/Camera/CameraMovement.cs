@@ -13,13 +13,18 @@ public class CameraMovement : MonoBehaviour
 
     private void Follow()
     {
-        var position = _player.transform.position + _offset;
+        transform.position = Vector3.Lerp(transform.position, CameraBound(), _smoothFactor * Time.fixedDeltaTime);
+    }
 
+    private Vector3 CameraBound()
+    {
+        var position = _player.transform.position + _offset;
+        
         Vector3 boundPosition = new Vector3(
             Mathf.Clamp(position.x, MinimumValues.x, MaximumValues.x),
             Mathf.Clamp(position.y, MinimumValues.y, MaximumValues.y),
             Mathf.Clamp(position.z, MinimumValues.z, MaximumValues.z));
-        
-        transform.position = Vector3.Lerp(transform.position, boundPosition, _smoothFactor * Time.fixedDeltaTime);
+
+        return boundPosition;
     }
 }
